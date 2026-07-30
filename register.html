@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AgriHeritage Registration</title>
+    <style>
+        /* General Reset */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: url('/media/fertilizer_images/registration.jpg') no-repeat center center fixed;
+            background-size: cover;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            color: #333;
+            margin: 0;
+            background-attachment: fixed;
+        }
+        
+        .google-translate {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            z-index: 100;
+        }
+        .google-translate {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: rgba(0, 0, 0, 0.5);
+            padding: 10px;
+            border-radius: 8px;
+        }
+        .google-translate #google_translate_element {
+            color: rgb(16, 16, 16);
+        }
+        .registration-container {
+            background: rgba(209, 207, 207, 0.95);
+            border: 2px solid #a3c9a8;
+            border-radius: 10px;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+            padding: 25px;
+            width: 100%;
+            max-width: 600px;
+            min-height: 250px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+        .registration-header {
+            text-align: center;
+            margin-bottom: 15px;
+        }
+        .registration-header h1 {
+            font-size: 28px;
+            color: #2a4d35;
+            letter-spacing: 1px;
+            font-weight: 700;
+            text-transform: uppercase;
+        }
+        .registration-header p {
+            font-size: 16px;
+            color: #5c8d73;
+            margin-top: 8px;
+        }
+        .registration-form {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+        .form-group {
+            margin-bottom: 12px;
+        }
+        .form-group label {
+            font-weight: bold;
+            display: block;
+            margin-bottom: 6px;
+            font-size: 14px;
+            color: #2a4d35;
+        }
+        .form-group input {
+            width: 100%;
+            padding: 10px;
+            border: 1.5px solid #a3c9a8;
+            border-radius: 6px;
+            font-size: 14px;
+            background-color: #c9c9c9;
+        }
+        .form-group input:focus {
+            outline: none;
+            border-color: #77bfa3;
+            box-shadow: 0 0 5px rgba(119, 191, 163, 0.5);
+        }
+        .form-button {
+            text-align: center;
+            margin-top: 8px;
+        }
+        .form-button button {
+            background-color: #77bfa3;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 6px;
+            font-size: 16px;
+            text-transform: uppercase;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        .form-button button:hover {
+            background-color: #5c8d73;
+        }
+        .registration-footer {
+            text-align: center;
+            margin-top: 15px;
+            font-size: 14px;
+        }
+        .registration-footer a {
+            color: #2a4d35;
+            text-decoration: none;
+            font-weight: bold;
+        }
+        .registration-footer a:hover {
+            text-decoration: underline;
+        }
+
+        .decorative-border {
+            border-top: 3px solid #77bfa3;
+            margin-bottom: 10px;
+        }
+
+        .footer-logo {
+            text-align: center;
+            font-size: 18px;
+            color: #2a4d35;
+            font-style: italic;
+            margin-top: 10px;
+        }
+
+        /* Modal Styles */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.4);
+            justify-content: center;
+            align-items: center;
+        }
+        .modal-content {
+            background-color: white;
+            border-radius: 10px;
+            padding: 20px;
+            text-align: center;
+            width: 300px;
+        }
+        .modal button {
+            background-color: #77bfa3;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 6px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+        .modal button:hover {
+            background-color: #5c8d73;
+        }
+    </style>
+</head>
+<body>
+    <!-- Google Translate Dropdown -->
+    <div class="google-translate">
+        <div id="google_translate_element"></div>
+    </div>
+    <br>
+    <div class="registration-container">
+        <div class="registration-header">
+            <h1>CloudFarm Registration</h1>
+            <div class="decorative-border"></div>
+            <p>Welcome CloudFarm - Nurturing the Roots of Modern Agriculture!</p>
+        </div>
+        <form class="registration-form" id="registration-form" method="POST" action="{% url 'register' %}">
+            {% csrf_token %}
+            <div class="form-group">
+                <label for="name">Full Name</label>
+                <input type="text" id="name" name="name" placeholder="Enter your full name" required>
+                <span class="error" id="name-error"></span>
+            </div>
+            <div class="form-group">
+                <label for="email">Email Address</label>
+                <input type="email" id="email" name="email" placeholder="Enter your email" required>
+                <span class="error" id="email-error"></span>
+            </div>
+            <div class="form-group">
+                <label for="number">Phone Number</label>
+                <input type="text" id="number" name="number" placeholder="Enter your 10-digit phone number" required>
+                <span class="error" id="number-error"></span>
+            </div>
+            <div class="form-group">
+                <label for="password">Password</label>
+                <input type="password" id="password" name="password" placeholder="Enter your password" required>
+                <span class="error" id="password-error"></span>
+                <small id="password-strength-message" style="color: #ff5733; font-size: 12px;">Give a strong password (min. 8 characters, including uppercase, lowercase, numbers, and special characters).</small>
+            </div>
+            <div class="form-group">
+                <label for="confirm_password">Confirm Password</label>
+                <input type="password" id="confirm_password" name="confirm_password" placeholder="Re-enter your password" required>
+                <span class="error" id="confirm-password-error"></span>
+            </div>
+            <div class="form-button">
+                <button type="submit" onclick="validateForm(event)">Register</button>
+            </div>
+        </form>
+        <div class="registration-footer">
+            <p>Already have an account? <a href="{% url 'login' %}">Login here</a></p>
+        </div>
+        <div class="footer-logo">
+            <p>CloudFarm - Cultivating a Greener Tomorrow</p>
+        </div>
+    </div>
+
+    <!-- Success Modal -->
+    <div id="successModal" class="modal">
+        <div class="modal-content">
+            <h3>Registration successful</h3>
+            <button onclick="redirectToLogin()">OK</button>
+        </div>
+    </div>
+
+    <!-- Google Translate Script -->
+    <script type="text/javascript">
+        function googleTranslateElementInit() {
+            new google.translate.TranslateElement({
+                pageLanguage: 'en',
+                includedLanguages: 'af,sq,am,ar,hy,az,eu,be,bn,bs,bg,my,ca,ceb,zh-CN,zh-TW,co,hr,cs,da,nl,en,eo,et,fi,fr,fy,gl,ka,de,el,gu,ht,ha,haw,he,hi,hmn,hu,is,ig,id,ga,it,ja,jv,kn,kk,km,rw,ko,ku,ky,lo,lv,lt,lb,mk,mg,ms,ml,mt,mi,mr,mn,ne,no,ny,or,ps,fa,pl,pt,pa,ro,ru,sm,gd,sr,st,si,sk,sl,so,es,su,sw,sv,tg,ta,tt,te,th,tr,tk,uk,ur,ug,uz,vi,cy,xh,yi,yo,zu',
+                layout: google.translate.TranslateElement.InlineLayout.SIMPLE
+            }, 'google_translate_element');
+        }
+
+        function validateForm(event) {
+            let valid = true;
+            const name = document.getElementById('name').value;
+            const email = document.getElementById('email').value;
+            const number = document.getElementById('number').value;
+            const password = document.getElementById('password').value;
+            const confirmPassword = document.getElementById('confirm_password').value;
+
+            // Reset previous error messages
+            document.getElementById('name-error').innerText = '';
+            document.getElementById('email-error').innerText = '';
+            document.getElementById('number-error').innerText = '';
+            document.getElementById('password-error').innerText = '';
+            document.getElementById('confirm-password-error').innerText = '';
+
+            if (!name) {
+    document.getElementById('name-error').innerHTML = "<span style='color: red;'>Please fill in the details</span>";
+    valid = false;
+}
+if (!email) {
+    document.getElementById('email-error').innerHTML = "<span style='color: red;'>Please fill in the details</span>";
+    valid = false;
+}
+if (!number) {
+    document.getElementById('number-error').innerHTML = "<span style='color: red;'>Please fill in the details</span>";
+    valid = false;
+}
+if (!password) {
+    document.getElementById('password-error').innerHTML = "<span style='color: red;'>Please fill in the details</span>";
+    valid = false;
+}
+if (!confirmPassword) {
+    document.getElementById('confirm-password-error').innerHTML = "<span style='color: red;'>Please fill in the details</span>";
+    valid = false;
+}
+if (password !== confirmPassword) {
+    document.getElementById('confirm-password-error').innerHTML = "<span style='color: red;'>Passwords do not match</span>";
+    valid = false;
+}
+
+            if (valid) {
+                // Show the success modal
+                document.getElementById('successModal').style.display = 'flex';
+                event.preventDefault(); // Prevent form submission
+            } else {
+                event.preventDefault();
+            }
+        }
+
+        function redirectToLogin() {
+            window.location.href = "{% url 'login' %}";
+        }
+    </script>
+    <script type="text/javascript" src="https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+</body>
+</html>

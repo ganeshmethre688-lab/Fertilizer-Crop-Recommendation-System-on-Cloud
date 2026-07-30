@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home | Agriculture</title>
+    <style>
+        /* Global Reset */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        /* Body Styling */
+        body {
+            font-family: 'Lora', serif;
+            background: linear-gradient(to bottom, rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), 
+                        url('/media/fertilizer_images/home.jpg') 
+                        no-repeat center center fixed;
+            background-size: cover;
+            color: #fff;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px;
+            text-align: center;
+        }
+
+        /* Header Section */
+        h1 {
+            font-size: 4rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            margin-bottom: 20px;
+            color: #ffffff;
+            text-shadow: 3px 3px 10px rgba(0, 0, 0, 0.7);
+        }
+
+        /* Navigation Bar */
+        nav {
+            background: rgba(0, 0, 0, 0.5);
+            padding: 10px 20px;
+            border-radius: 8px;
+            margin-top: 10px;
+        }
+
+        nav a {
+            color: #ffffff;
+            font-size: 1.2rem;
+            margin: 0 15px;
+            text-decoration: none;
+            font-weight: 600;
+            text-transform: uppercase;
+            transition: color 0.3s ease, background-color 0.3s ease;
+        }
+
+        nav a:hover {
+            color: #6A9D3E;
+        }
+
+        /* Button Styling */
+        button {
+            background-color: #6A9D3E;
+            color: white;
+            font-size: 1.2rem;
+            padding: 15px 50px;
+            border: none;
+            border-radius: 30px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+        }
+
+        button:hover {
+            background-color: #5C8B33;
+            transform: scale(1.1);
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.5);
+        }
+
+        /* Footer Section */
+        footer {
+            font-size: 0.9rem;
+            color: #f1f1f1;
+            margin-top: 20px;
+        }
+
+        footer a {
+            color: #6A9D3E;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        footer a:hover {
+            text-decoration: underline;
+        }
+
+        /* Fertilizer Card Section */
+        .fertilizer-cards {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-top: 40px;
+        }
+
+        .fertilizer-card {
+            background-color: rgba(255, 255, 255, 0.8);
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+            width: 300px;
+            margin: 20px;
+            padding: 20px;
+            text-align: center;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .fertilizer-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 8px 15px rgba(0, 0, 0, 0.3);
+        }
+
+        .fertilizer-card img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            border-radius: 8px;
+        }
+
+        .fertilizer-card h3 {
+            font-size: 1.5rem;
+            margin-top: 20px;
+            color: #6A9D3E;
+            font-weight: 600;
+        }
+
+        /* Google Translate Dropdown */
+        .google-translate {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: rgba(0, 0, 0, 0.5);
+            padding: 10px;
+            border-radius: 8px;
+        }
+
+        .google-translate #google_translate_element {
+            color: white;
+        }
+    </style>
+</head>
+<body>
+    <!-- Google Translate Dropdown -->
+    <div class="google-translate">
+        <div id="google_translate_element"></div>
+    </div>
+    <br>
+    <h1>Welcome to the Agriculture Hub</h1>
+    
+    <!-- Navigation Links -->
+    <nav>
+        <a href="{% url 'home' %}">Home</a>
+        <a href="{% url 'Aboutus' %}">About Us</a>
+        <a href="{% url 'croptable' %}">YIELDUP</a>
+        <a href="{% url 'prediction' %}">CROPBUDDY</a>
+        <a href="{% url 'fertilizer_list' %}">Fertilizers</a>
+        <a href="{% url 'bill' %}">Buy  FERTILIZERS</a>
+        <!--<a href="{% url 'payment' %}">Payment</a>-->
+        <a href="{% url 'login' %}">Logout</a>
+    </nav>
+
+    <a href="{% url 'fertilizer_list' %}">
+        <button>Explore Our Products</button>
+    </a>
+
+    <!-- Footer -->
+    <footer>
+        <p>Powered by <a href="#">Your Agriculture Hub</a></p>
+    </footer>
+
+    <!-- Google Translate Script -->
+    <script type="text/javascript">
+        function googleTranslateElementInit() {
+            new google.translate.TranslateElement({
+                pageLanguage: 'en', // Default language of your webpage
+                includedLanguages: 'af,sq,am,ar,hy,az,eu,be,bn,bs,bg,my,ca,ceb,zh-CN,zh-TW,co,hr,cs,da,nl,en,eo,et,fi,fr,fy,gl,ka,de,el,gu,ht,ha,haw,he,hi,hmn,hu,is,ig,id,ga,it,ja,jv,kn,kk,km,rw,ko,ku,ky,lo,lv,lt,lb,mk,mg,ms,ml,mt,mi,mr,mn,ne,no,ny,or,ps,fa,pl,pt,pa,ro,ru,sm,gd,sr,st,si,sk,sl,so,es,su,sw,sv,tg,ta,tt,te,th,tr,tk,uk,ur,ug,uz,vi,cy,xh,yi,yo,zu', // All supported languages
+                layout: google.translate.TranslateElement.InlineLayout.SIMPLE
+            }, 'google_translate_element');
+        }
+    </script>
+    <script type="text/javascript" src="https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+</body>
+</html>

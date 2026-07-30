@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CloudFarm Login</title>
+    <link href="https://fonts.googleapis.com/css2?family=Merriweather:wght@400;700&family=Lora:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        /* General Reset */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        } 
+        body {
+            font-family: 'Poppins', sans-serif; /* Modern sans-serif font */
+            background: url('/media/fertilizer_images/login.jpg') 
+                        no-repeat center center fixed; /* New background image */
+            background-size: cover;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            color: #333; /* Darker text for better readability */
+            margin: 0;
+            background-attachment: fixed;
+        }
+        .google-translate {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            z-index: 100; /* Ensure it stays above other elements */
+        }
+        .google-translate {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: rgba(0, 0, 0, 0.5);
+            padding: 10px;
+            border-radius: 8px;
+        }
+        .google-translate #google_translate_element {
+            color: white;
+        }
+        .login-container {
+            background: rgba(187, 186, 186, 0.9); /* Lightly transparent white background */
+            border-radius: 12px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+            padding: 40px;
+            width: 80%;
+            max-width: 400px;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        } 
+        .login-container:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.15);
+        }   
+        .login-header {
+            text-align: center;
+            margin-bottom: 25px;
+        }    
+        .login-header h1 {
+            font-family: 'Poppins', sans-serif; /* Modern sans-serif font */
+            font-size: 1.5rem;
+            color: #4e8a74; /* Soft green color for header */
+            font-weight: 600;
+            letter-spacing: 1px;
+        }    
+        .login-form {
+            display: flex;
+            flex-direction: column;
+            gap: 18px;
+        }
+    
+        .form-group {
+            margin-bottom: 18px;
+        }    
+        .form-group label {
+            display: block;
+            font-weight: 600;
+            margin-bottom: 6px;
+            font-size: 1.0rem;
+            color: #4e8a74; /* Soft green text */
+        }    
+        .form-group input {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #acabab;
+            border-radius: 8px;
+            font-size: 1.0rem;
+            transition: border-color 0.3s ease, box-shadow 0.3s ease;
+            font-family: 'Poppins', sans-serif; /* Matching input font style */
+        }   
+        .form-group input:focus {
+            outline: none;
+            border-color: #4e8a74; /* Soft green focus border */
+            box-shadow: 0 0 8px rgba(116, 116, 116, 0.4); /* Soft green glow */
+        }    
+        .form-group span.error {
+            color: #494848;
+            font-size: 12px;
+            margin-top: 5px;
+        }   
+        .form-button {
+            text-align: center;
+        }    
+        .form-button button {
+            background-color: #4e8a74; /* Soft green button */
+            color: rgb(74, 73, 73);
+            padding: 12px 25px;
+            border: none;
+            border-radius: 30px;
+            font-size: 1.0rem;
+            cursor: pointer;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+            font-family: 'Poppins', sans-serif;
+        }    
+        .form-button button:hover {
+            background-color: #3a3b3b; /* Darker green on hover */
+            transform: scale(1.05); /* Slight button scale effect */
+        }   
+        .login-footer {
+            text-align: center;
+            margin-top: 30px;
+        }
+        .login-footer p {
+            font-size: 1rem;
+            color: #6d6c6c;
+        }   
+        .login-footer a {
+            color: #4e8a74;
+            text-decoration: none;
+            font-weight: bold;
+            transition: text-decoration 0.3s ease;
+        }
+        .login-footer a:hover {
+            text-decoration: underline;
+        }    
+
+        /* Error message styling */
+        .alert {
+            padding: 10px;
+            background-color: #f8d7da;
+            color: #721c24;
+            margin-bottom: 20px;
+            border-radius: 5px;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 480px) {
+            .login-container {
+                padding: 35px;
+            }   
+            .login-header h1 {
+                font-size: 1.3rem;
+            }    
+            .form-group label {
+                font-size: 1rem;
+            }    
+            .form-button button {
+                font-size: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Google Translate Dropdown -->
+    <div class="google-translate">
+        <div id="google_translate_element"></div>
+    </div>
+
+    <div class="login-container">
+        <div class="login-header">
+            <h1>CloudFarm Login</h1>
+        </div>
+        
+        {% if messages %}
+            <div class="alert">
+                {% for message in messages %}
+                    <p>{{ message }}</p>
+                {% endfor %}
+            </div>
+        {% endif %}
+
+        <form class="login-form" method="POST" action="{% url 'login' %}">
+            {% csrf_token %}
+            <div class="form-group">
+                <label for="email">Email id</label>
+                <input type="email" id="email" name="email" placeholder="Enter valid e-mail id" required>
+                <span class="error">{{ email_error }}</span>
+            </div>
+            <div class="form-group">
+                <label for="password">Password</label>
+                <input type="password" id="password" name="password" placeholder="Enter your password" required>
+                <span class="error">{{ password_error }}</span>
+            </div>
+            <div class="login-footer">
+                <p><a href="{% url 'home' %}">Login</a></p>
+            </div>
+        </form>
+
+        <div class="login-footer">
+            <p>Don't have an account? <a href="{% url 'register' %}">Register here</a></p>
+        </div>
+    </div>
+
+    <script>
+        // JavaScript function to validate the form
+        document.querySelector('.login-footer a').addEventListener('click', function(e) {
+            var email = document.getElementById("email").value;
+            var password = document.getElementById("password").value;
+            
+            // Check if email or password is empty
+            if (email === "" || password === "") {
+                e.preventDefault();  // Prevent the default action (form submission or redirect)
+                alert("Please fill out both the email and password fields.");
+                return;
+            }
+
+            // Basic email pattern check
+            var emailPattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+            if (!emailPattern.test(email)) {
+                e.preventDefault();  // Prevent the default action
+                alert("Please enter a valid email id.");
+                return;
+            }
+        });
+    </script>
+
+    <!-- Google Translate Script -->
+    <script type="text/javascript">
+        function googleTranslateElementInit() {
+            new google.translate.TranslateElement({
+                pageLanguage: 'en', // Default language of your webpage
+                includedLanguages: 'af,sq,am,ar,hy,az,eu,be,bn,bs,bg,my,ca,ceb,zh-CN,zh-TW,co,hr,cs,da,nl,en,eo,et,fi,fr,fy,gl,ka,de,el,gu,ht,ha,haw,he,hi,hmn,hu,is,ig,id,ga,it,ja,jv,kn,kk,km,rw,ko,ku,ky,lo,lv,lt,lb,mk,mg,ms,ml,mt,mi,mr,mn,ne,no,ny,or,ps,fa,pl,pt,pa,ro,ru,sm,gd,sr,st,si,sk,sl,so,es,su,sw,sv,tg,ta,tt,te,th,tr,tk,uk,ur,ug,uz,vi,cy,xh,yi,yo,zu', // All supported languages
+                layout: google.translate.TranslateElement.InlineLayout.SIMPLE
+            }, 'google_translate_element');
+        }
+    </script>
+    <script type="text/javascript" src="https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+</body>
+</html>
